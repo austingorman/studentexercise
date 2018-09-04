@@ -82,7 +82,7 @@ namespace nss.Data
             {
                 if (ex.Message.Contains("no such table"))
                 {
-                    db.Execute($@"CREATE TABLE Instructor (
+                    db.Execute(@"CREATE TABLE Instructor (
                         `Id`	integer NOT NULL PRIMARY KEY AUTOINCREMENT,
                         `FirstName`	varchar(80) NOT NULL,
                         `LastName`	varchar(80) NOT NULL,
@@ -98,7 +98,7 @@ namespace nss.Data
                               'Brownlee',
                               '@coach',
                               'Dad jokes',
-                              c.Id
+                              c.Id,
                         FROM Cohort c WHERE c.Name = 'Evening Cohort 1'
                     ");
 
@@ -108,7 +108,7 @@ namespace nss.Data
                               'Shepherd',
                               '@joes',
                               'Analogies',
-                              c.Id
+                              c.Id,
                         FROM Cohort c WHERE c.Name = 'Day Cohort 13'
                     ");
 
@@ -118,11 +118,106 @@ namespace nss.Data
                               'David',
                               '@jisie',
                               'Student success',
-                              c.Id
+                              c.Id,
                         FROM Cohort c WHERE c.Name = 'Day Cohort 21'
                     ");
                 }
             }
         }
+        public static void CheckExercisesTable()
+        {
+            SqliteConnection db = DatabaseInterface.Connection;
+
+            try
+            {
+                List<Exercise> exercise = db.Query<Exercise>
+                    ("SELECT Id FROM Exercise").ToList();
+            }
+            catch (System.Exception ex)
+            {
+                if (ex.Message.Contains("no such table"))
+                {
+                    db.Execute($@"CREATE TABLE Exercise (
+                        `Id`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                        `Name`	TEXT NOT NULL,
+                        `Language` TEXT NOT NULL
+                    )");
+
+                    db.Execute($@"INSERT INTO Exercise
+                    VALUES(null,
+                        'ChickenMonkey',
+                        'JavaScript')");
+                }
+            }
+        }
+        public static void CheckStudentsTable()
+        {
+            SqliteConnection db = DatabaseInterface.Connection;
+
+            try
+            {
+                List<Student> student = db.Query<Student>
+                    ("SELECT Id FROM Student").ToList();
+            }
+            catch (System.Exception ex)
+            {
+                if (ex.Message.Contains("no such table"))
+                {
+                    db.Execute(@"CREATE TABLE Student (
+                        `Id`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                        `FirstName`	TEXT NOT NULL,
+                        `LastName`	TEXT NOT NULL,
+                        `SlackHandle` TEXT NOT NULL UNIQUE,
+                        `CohortId` INTEGER NOT NULL
+                    )");
+
+                    db.Execute($@"INSERT INTO Student
+                 SELECT null,
+                    'Austin',
+                    'Gorman',
+                    'austingorman',
+                    c.Id,
+                    FROM Cohort c WHERE c.Name = 'Day Cohort 21'
+                    ");
+
+                    db.Execute($@"INSERT INTO Student
+                 SELECT null,
+                    'Brett',
+                    'JavaScript',
+                    'breezy',
+                    c.Id,
+                    FROM Cohort c WHERE c.Name = 'Day Cohort 21'
+");
+
+                    db.Execute($@"INSERT INTO Student
+                SELECT null,
+                    'Darren',
+                    'Mittermeier',
+                    'keytar',
+                    c.Id,
+                    FROM Cohort c WHERE c.Name = 'Day Cohort 21'
+");
+                }
+            }
+        }
+        public static void CheckStudentExerciseTable()
+        {
+            SqliteConnection db = DatabaseInterface.Connection;
+
+            try
+            {
+                List<StudentExercise> studentExercise = db.Query<StudentExercise>
+                    ("SELECT Id FROM StudentExercise").ToList();
+            }
+            catch (System.Exception ex)
+            {
+                if (ex.Message.Contains("no such table"))
+                {
+                    StudentExercise.Create(db);
+                    StudentExercise.Seed(db);
+                }
+            }
+        }
+
     }
 }
