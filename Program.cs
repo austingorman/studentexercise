@@ -221,9 +221,42 @@ namespace nss
                 Console.WriteLine(output);
             }
 
+            // Dictionary<int, Cohort> studentexercise = new Dictionary<int, Cohort>();
+            // db.Query<Student, Exercise, Instructor, Cohort, Cohort>(@"
+            // SELECT
 
+            // ", () =>
+            // {
+            //     if ()
+            //     {
 
+            //     }
+            // });
 
+            Dictionary<int, Cohort> instructorStudentCohort = new Dictionary<int, Cohort>();
+            db.Query<Student, Instructor, Cohort, Cohort>(@"
+            SELECT
+                s.CohortId
+                s.FirstName,
+                s.LastName,
+                i.CohortId,
+                i.FirstName,
+                i.LastName,
+                c.CohortId,
+                c.Name
+            FROM Cohort c
+            JOIN Instructor i ON i.CohortId = c.Id
+            JOIN Student s ON s.CohortId = c.Id
+", (student, instructor, cohort) =>
+            {
+                if (!instructorStudentCohort.ContainsKey(cohort.Id))
+                {
+                    instructorStudentCohort[cohort.Id] = cohort;
+                }
+                instructorStudentCohort[cohort.Id].Instructors.Add(instructor);
+                instructorStudentCohort[cohort.Id].Students.Add(student);
+                return cohort;
+            });
             /*
                 1. Create Exercises table and seed it
                 2. Create Student table and seed it  (use sub-selects)

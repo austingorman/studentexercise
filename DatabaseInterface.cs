@@ -98,7 +98,7 @@ namespace nss.Data
                               'Brownlee',
                               '@coach',
                               'Dad jokes',
-                              c.Id,
+                              c.Id
                         FROM Cohort c WHERE c.Name = 'Evening Cohort 1'
                     ");
 
@@ -108,7 +108,7 @@ namespace nss.Data
                               'Shepherd',
                               '@joes',
                               'Analogies',
-                              c.Id,
+                              c.Id
                         FROM Cohort c WHERE c.Name = 'Day Cohort 13'
                     ");
 
@@ -118,7 +118,7 @@ namespace nss.Data
                               'David',
                               '@jisie',
                               'Student success',
-                              c.Id,
+                              c.Id
                         FROM Cohort c WHERE c.Name = 'Day Cohort 21'
                     ");
                 }
@@ -176,7 +176,7 @@ namespace nss.Data
                     'Austin',
                     'Gorman',
                     'austingorman',
-                    c.Id,
+                    c.Id
                     FROM Cohort c WHERE c.Name = 'Day Cohort 21'
                     ");
 
@@ -185,7 +185,7 @@ namespace nss.Data
                     'Brett',
                     'JavaScript',
                     'breezy',
-                    c.Id,
+                    c.Id
                     FROM Cohort c WHERE c.Name = 'Day Cohort 21'
 ");
 
@@ -194,7 +194,7 @@ namespace nss.Data
                     'Darren',
                     'Mittermeier',
                     'keytar',
-                    c.Id,
+                    c.Id
                     FROM Cohort c WHERE c.Name = 'Day Cohort 21'
 ");
                 }
