@@ -221,22 +221,33 @@ namespace nss
                 Console.WriteLine(output);
             }
 
-            // Dictionary<int, Cohort> studentexercise = new Dictionary<int, Cohort>();
-            // db.Query<Student, Exercise, Instructor, Cohort, Cohort>(@"
-            // SELECT
+            Dictionary<int, Cohort> studentexercise = new Dictionary<int, Cohort>();
+            db.Query<Student, Exercise, Instructor, Cohort, Cohort>(@"
+            SELECT
+                s.CohortId,
+                s.FirstName,
+                s.LastName,
+                e.Id,
+                e.Name,
+                i.Id,
+                i.FirstName,
+                i.LastName
+                FROM Exercise e
+                JOIN Exercise ON e.CohortId = 
 
-            // ", () =>
-            // {
-            //     if ()
-            //     {
 
-            //     }
-            // });
+            ", () =>
+            {
+                if ()
+                {
+
+                }
+            });
 
             Dictionary<int, Cohort> instructorStudentCohort = new Dictionary<int, Cohort>();
             db.Query<Student, Instructor, Cohort, Cohort>(@"
             SELECT
-                s.CohortId
+                s.CohortId,
                 s.FirstName,
                 s.LastName,
                 i.CohortId,
